@@ -68,8 +68,7 @@ public abstract class Util {
 	}
 
 	public static List<Estudante> listaEstudantes_L(BancoDeDados db, String arguments) {
-		List<Estudante> estudantes = new ArrayList<>();
-		return estudantes = db.query(Estudante.TABLE_NAME, arguments, "ORDER BY " + Estudante.COLUM_NOME + " ASC");
+		return db.query(Estudante.TABLE_NAME, arguments, "ORDER BY " + Estudante.COLUM_NOME + " ASC");
 	}
 
 	/**

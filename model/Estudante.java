@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import data.BancoDeDados;
@@ -13,9 +12,6 @@ public class Estudante {
 	public final static String TABLE_NAME = "estudantes";
 	public final static String COLUM_NOME = "nome";
 	public final static String COLUM_CURSO = "curso";
-	
-//	private static String estudantesListaNomeCurso = null; 
-//	private static List<Estudante> estudantes;
 
 	public Estudante(Integer id, String nome, String curso) {
 		super();

@@ -4,7 +4,6 @@ import view.Console;
 import view.MensagemParaUsuario;
 import view.Menu;
 import view.OptionPane;
-import view.Util;
 
 public class SistemaGerenciamentoEstudantes {
 	public static void main(String[] args) {
