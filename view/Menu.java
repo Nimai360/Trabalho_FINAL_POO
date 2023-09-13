@@ -156,12 +156,25 @@ public final class Menu {
 	}
 
 	private void removerEstudante() {
-		Integer estudante = msgUsuario.selecionarEstudante(db);
-		List<Estudante> estudantes = Util.listaEstudantes_L(db, null);
-		if (estudante != null) {
-			db.deleteDataById(Estudante.TABLE_NAME, (estudantes.get(estudante).getId()));
-			msgUsuario.messageInfo(estudantes.get(estudante).getNome() + " deletado com sucesso!\n\n",
-					"Atualização realizada\n\n");
+		Integer op = msgUsuario.optionInfo("Quantos estudantes gostaria de remover?", "Remoção de estudante\n\n",
+				new String[] { "Apenas 1", "Todos" });
+		if (msgUsuario instanceof Console) {
+			op--;
+		}
+		switch (op) {
+		case 0:
+			Integer estudante = msgUsuario.selecionarEstudante(db);
+			List<Estudante> estudantes = Util.listaEstudantes_L(db, null);
+
+			if (estudante != null) {
+				db.deleteDataById(Estudante.TABLE_NAME, (estudantes.get(estudante).getId()));
+				msgUsuario.messageInfo(estudantes.get(estudante).getNome() + " deletado com sucesso!\n\n",
+						"Atualização realizada\n\n");
+			}
+			break;
+		case 1:
+			db.deleteAllDataById(Estudante.TABLE_NAME);
+			break;
 		}
 	}
 

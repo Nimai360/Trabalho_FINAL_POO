@@ -39,44 +39,52 @@ public class OptionPane implements MensagemParaUsuario {
 	@Override
 	public void listarEstudantes(BancoDeDados db, String val) {
 		List<Estudante> estudantes = Util.listaEstudantes_L(db, val);
-		JList<String> list = new JList<>(Util.listaEstudantes_S(db, val, estudantes).split("\n"));
-		JScrollPane jscrollpane = new JScrollPane(list);
-		messageInfo(jscrollpane, "Listagem de todos os estudantes");
+		if (estudantes.isEmpty()) {
+			messageInfo("Não há estudantes cadastrados no sistema", "Listagem de todos os estudantes");
+		} else {
+			JList<String> list = new JList<>(Util.listaEstudantes_S(db, val, estudantes).split("\n"));
+			JScrollPane jscrollpane = new JScrollPane(list);
+			messageInfo(jscrollpane, "Listagem de todos os estudantes");
+		}
 	}
 
 	@Override
 	public Integer selecionarEstudante(BancoDeDados db) {
 		List<Estudante> estudantes = Util.listaEstudantes_L(db, null);
-		JList<String> list = new JList<>(Util.listaEstudantes_S(db, null, estudantes).split("\n"));
-		JScrollPane jscrollpane = new JScrollPane(list);
+		if (estudantes.isEmpty()) {
+			messageInfo("Não há estudantes cadastrados no sistema", "Listagem de todos os estudantes");
+		} else {
+			JList<String> list = new JList<>(Util.listaEstudantes_S(db, null, estudantes).split("\n"));
+			JScrollPane jscrollpane = new JScrollPane(list);
 
-		// Configurar o JOptionPane personalizado
-		UIManager.put("OptionPane.okButtonText", "Selecionar");
-		UIManager.put("OptionPane.cancelButtonText", "Voltar");
+			// Configurar o JOptionPane personalizado
+			UIManager.put("OptionPane.okButtonText", "Selecionar");
+			UIManager.put("OptionPane.cancelButtonText", "Voltar");
 
-		Integer estudanteSelecionado = null;
-		do {
-			try {
-				// Exibir o JOptionPane personalizado com a JList
-				int escolha = JOptionPane.showOptionDialog(null, jscrollpane, "Escolha um estudante",
-						JOptionPane.OK_CANCEL_OPTION, // Usar OK_CANCEL_OPTION para adicionar um botão Cancelar
-						JOptionPane.PLAIN_MESSAGE, null, null, null);
+			Integer estudanteSelecionado = null;
+			do {
+				try {
+					// Exibir o JOptionPane personalizado com a JList
+					int escolha = JOptionPane.showOptionDialog(null, jscrollpane, "Escolha um estudante",
+							JOptionPane.OK_CANCEL_OPTION, // Usar OK_CANCEL_OPTION para adicionar um botão Cancelar
+							JOptionPane.PLAIN_MESSAGE, null, null, null);
 
-				// Verificar a escolha do usuário
-				if (escolha == JOptionPane.OK_OPTION) {
-					// Obter o estudante selecionado
-					estudanteSelecionado = list.getSelectedIndex();
-					if (estudanteSelecionado != -1) {
-						return estudanteSelecionado;
+					// Verificar a escolha do usuário
+					if (escolha == JOptionPane.OK_OPTION) {
+						// Obter o estudante selecionado
+						estudanteSelecionado = list.getSelectedIndex();
+						if (estudanteSelecionado != -1) {
+							return estudanteSelecionado;
+						}
 					}
+					if (escolha == JOptionPane.CANCEL_OPTION) {
+						return null;
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
 				}
-				if (escolha == JOptionPane.CANCEL_OPTION) {
-					return null;
-				}
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-		} while (estudanteSelecionado == -1);
+			} while (estudanteSelecionado == -1);
+		}
 		return null;
 	}
 }

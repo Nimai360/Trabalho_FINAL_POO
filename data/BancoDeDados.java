@@ -86,6 +86,11 @@ public final class BancoDeDados extends Conexao {
 		String query = "DELETE FROM " + table_name + " WHERE id = " + id;
 		return executeQuery(query);
 	}
+	
+	public Boolean deleteAllDataById(String table_name) {
+		String query = "DELETE FROM " + table_name;
+		return executeQuery(query);
+	}
 
 	public Boolean editDataById(String table_name, String field, String value, Integer id) {
 		String query = "UPDATE " + table_name + " SET " + field + " = " + value + " WHERE id = " + id;
