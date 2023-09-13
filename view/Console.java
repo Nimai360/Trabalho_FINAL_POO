@@ -16,7 +16,7 @@ public class Console implements MensagemParaUsuario {
 		for (int i = 0; i < opcoes.length; i++) {
 			op += (i + 1) + ". " + opcoes[i] + "\n";
 		}
-		messageInfo(mensagem + "\n\n" + op, titulo);
+		messageInfo(mensagem + "\n\n" + op, "\n" + titulo);
 		String entrada;
 		do {
 			entrada = Util.entrada_S();
@@ -26,13 +26,13 @@ public class Console implements MensagemParaUsuario {
 
 	@Override
 	public String inputInfo(String mensagem, String titulo, String OK, String CANCEL) {
-		messageInfo(mensagem, titulo + "\n\n");
+		messageInfo(mensagem, "\n" + titulo + "\n\n");
 		return Util.entrada_S();
 	}
 
 	@Override
 	public void messageInfo(String mensagem, String titulo) {
-		System.out.println(titulo + mensagem);
+		System.out.println("\n" + titulo + mensagem);
 	}
 
 	@Override
