@@ -49,7 +49,7 @@ public class Console implements MensagemParaUsuario {
 		String entrada;
 		do {
 			entrada = Util.entrada_S();
-		} while (!Util.isInteger(entrada, 1, Util.listaEstudantes_L(db, null).size()));
+		} while (!Util.isInteger(entrada, 1, estudantes.size()));
 		return Integer.parseInt(entrada)-1;
 	}
 }

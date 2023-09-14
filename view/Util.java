@@ -70,64 +70,19 @@ public abstract class Util {
 
 	private static String formatacaoListaNumeracao(MensagemParaUsuario msgUsuario, List<Estudante> estudantes,
 			Integer cont) {
-		String spaces = "";
+		StringBuilder espacos = new StringBuilder();
 		Integer qtDigitos = (estudantes.size() + "").length() - (cont + "").length();
 		for (int i = 0; i < qtDigitos; i++) {
 			if (msgUsuario instanceof Console) {
-				spaces += " ";
+				espacos.append(" ");
 			} else {
-				spaces += "  ";
+				espacos.append("  ");
 			}
 		}
-		return spaces;
+		return espacos.toString();
 	}
 
 	public static List<Estudante> listaEstudantes_L(BancoDeDados db, String arguments) {
 		return db.query(Estudante.TABLE_NAME, arguments, "ORDER BY " + Estudante.COLUM_NOME + " ASC");
 	}
-
-	/**
-	 * Retorna um valor Double válido
-	 */
-//	public static Double entrada_D() {
-//		Double value = null;
-//		Boolean passou = false;
-//
-//		while (!passou) {
-//
-//			if (sc.hasNext()) {
-//				if (sc.hasNextDouble()) {
-//					try {
-//						value = sc.nextDouble();
-//						passou = true;
-//					} catch (Exception e) {
-//						// TODO: handle exception
-//					}
-//				}
-//			}
-//		}
-//		return value;
-//	}
-
-	/**
-	 * Retorna um valor Integer válido
-	 */
-//	public static Integer entrada_I() {
-//		Integer value = null;
-//		Boolean passou = false;
-//
-//		while (!passou) {
-//			try {
-//				if (sc.hasNext()) {
-//					if (sc.hasNextInt()) {
-//						value = sc.nextInt();
-//						passou = true;
-//					}
-//				}
-//			} catch (Exception e) {
-//				return -1;
-//			}
-//		}
-//		return value;
-//	}
 }
