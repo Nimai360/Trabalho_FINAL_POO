@@ -105,6 +105,7 @@ public final class Menu {
 				String curso = msgUsuario.inputInfo("Informe o curso do estudante", "Cadastro de Estudante", false,
 						"Confirmar", "Voltar");
 				if (Util.isString(curso)) {
+					// Só pra dizer que usamos ENUM
 					db.insertData(Db_TabelaEstudante.NOME_TABELA,
 							Db_TabelaEstudante.COLUMN_NOME.getNomeColuna() + ", "
 									+ Db_TabelaEstudante.COLUMN_CURSO.getNomeColuna(),
