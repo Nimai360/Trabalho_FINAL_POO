@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import data.BancoDeDados;
+import model.Db_TabelaEstudante;
 import model.Estudante;
 
 public final class Menu {
@@ -45,8 +46,10 @@ public final class Menu {
 				listarEstudantes();
 				break;
 			case 5:
-				sair = true;
-				exitProgram();
+				if (msgUsuario instanceof Console) {
+					sair = true;
+					exitProgram();
+				}
 				break;
 			default:
 			}
@@ -78,7 +81,7 @@ public final class Menu {
 
 		String op;
 		do {
-			op = msgUsuario.inputInfo(texto, "Gerenciador de Estudantes", "Confirmar", "Sair");
+			op = msgUsuario.inputInfo(texto, "Gerenciador de Estudantes", true, "Confirmar", "Sair");
 			if (op == null) {
 				exitProgram();
 			}
@@ -88,7 +91,7 @@ public final class Menu {
 		return Integer.parseInt(op);
 	}
 
-	private void adicionarEstudante() { // Corrigir inserção
+	private void adicionarEstudante() {
 		Integer op = msgUsuario.optionInfo("Como gostaria de adicionar o estudante:", "Cadastro de estudante\n\n",
 				new String[] { "Manualmente", "Auto +50 estudantes" });
 		if (msgUsuario instanceof Console) {
@@ -96,13 +99,19 @@ public final class Menu {
 		}
 		switch (op) {
 		case 0:
-			String nome = msgUsuario.inputInfo("Informe o nome do estudante", "Cadastro de Estudante", "Avançar",
+			String nome = msgUsuario.inputInfo("Informe o nome do estudante", "Cadastro de Estudante", true, "Avançar",
 					"Voltar ao menu");
 			if (Util.isString(nome)) {
-				String curso = msgUsuario.inputInfo("Informe o curso do estudante", "Cadastro de Estudante",
+				String curso = msgUsuario.inputInfo("Informe o curso do estudante", "Cadastro de Estudante", false,
 						"Confirmar", "Voltar");
 				if (Util.isString(curso)) {
-					db.insertData(Estudante.TABLE_NAME, "nome, curso", "'" + nome + "', '" + curso + "'");
+					db.insertData(Db_TabelaEstudante.NOME_TABELA,
+							Db_TabelaEstudante.COLUMN_NOME.getNomeColuna() + ", "
+									+ Db_TabelaEstudante.COLUMN_CURSO.getNomeColuna(),
+							"'" + nome + "', '" + curso + "'");
+
+//					db.insertData(Estudante.TABLE_NAME, Estudante.COLUM_NOME + ", " + Estudante.COLUM_CURSO,
+//							"'" + nome + "', '" + curso + "'");
 				}
 			}
 			break;
@@ -114,7 +123,7 @@ public final class Menu {
 
 	private void editarEstudante() {
 		Integer estudante;
-		estudante = msgUsuario.selecionarEstudante(db);
+		estudante = msgUsuario.selecionarEstudante(db, msgUsuario);
 		List<Estudante> estudantes = Util.listaEstudantes_L(db, null);
 		String coluna = null, valor = null;
 
@@ -129,14 +138,14 @@ public final class Menu {
 			switch (op) {
 			case 0:
 				String nome = msgUsuario.inputInfo("Mudar o nome de " + estudantes.get(estudante).getNome() + " para:",
-						"Alterção do nome de cadastro", "Confirmar", "Voltar");
+						"Alterção do nome de cadastro", true, "Confirmar", "Voltar");
 				coluna = Estudante.COLUM_NOME;
 				valor = nome;
 				break;
 			case 1:
 				String curso = msgUsuario.inputInfo(
 						"Mudar o curso de " + estudantes.get(estudante).getCurso() + " para:",
-						"Alteração de cadastro do curso", "Confirmar", "Voltar");
+						"Alteração de cadastro do curso", true, "Confirmar", "Voltar");
 				coluna = Estudante.COLUM_CURSO;
 				valor = curso;
 				break;
@@ -163,7 +172,7 @@ public final class Menu {
 		}
 		switch (op) {
 		case 0:
-			Integer estudante = msgUsuario.selecionarEstudante(db);
+			Integer estudante = msgUsuario.selecionarEstudante(db, msgUsuario);
 			List<Estudante> estudantes = Util.listaEstudantes_L(db, null);
 
 			if (estudante != null) {
@@ -193,13 +202,13 @@ public final class Menu {
 			break;
 		case 1: // Pesquisar por nome
 			String nome = msgUsuario.inputInfo("Informe o nome do estudante desejado:", "Buscar estudante por nome",
-					"Confirmar", "Voltar");
+					true, "Confirmar", "Voltar");
 			coluna = Estudante.COLUM_NOME;
 			valor = nome;
 			break;
 		case 2: // Pesquisar por curso
-			String curso = msgUsuario.inputInfo("Informe o curso desejado:", "Buscar estudante por curso", "Confirmar",
-					"Voltar");
+			String curso = msgUsuario.inputInfo("Informe o curso desejado:", "Buscar estudante por curso", true,
+					"Confirmar", "Voltar");
 			coluna = Estudante.COLUM_CURSO;
 			valor = curso;
 			break;
@@ -208,7 +217,7 @@ public final class Menu {
 			argumento = "LOWER(" + coluna + ") LIKE '%" + valor.toLowerCase() + "%'";
 		}
 		if (argumento != null) {
-			msgUsuario.listarEstudantes(db, argumento);
+			msgUsuario.listarEstudantes(db, msgUsuario, argumento);
 		}
 	}
 }

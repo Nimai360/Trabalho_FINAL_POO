@@ -25,8 +25,9 @@ public class Console implements MensagemParaUsuario {
 	}
 
 	@Override
-	public String inputInfo(String mensagem, String titulo, String OK, String CANCEL) {
-		messageInfo(mensagem, "\n" + titulo + "\n\n");
+	public String inputInfo(String mensagem, String titulo, Boolean exibirTitle, String OK, String CANCEL) {
+		String title = exibirTitle ? titulo + "\n\n" : "";
+		messageInfo(mensagem, "\n" + title);
 		return Util.entrada_S();
 	}
 
@@ -36,15 +37,15 @@ public class Console implements MensagemParaUsuario {
 	}
 
 	@Override
-	public void listarEstudantes(BancoDeDados db, String val) {
+	public void listarEstudantes(BancoDeDados db, MensagemParaUsuario msgUsuario, String val) {
 		List<Estudante> estudantes = Util.listaEstudantes_L(db, val);
-		messageInfo(Util.listaEstudantes_S(db, val, estudantes), "Listagem de todos os estudantes\n\n");
+		messageInfo(Util.listaEstudantes_S(db, msgUsuario, val, estudantes), "Listagem de todos os estudantes\n\n");
 	}
 
 	@Override
-	public Integer selecionarEstudante(BancoDeDados db) {
+	public Integer selecionarEstudante(BancoDeDados db, MensagemParaUsuario msgUsuario) {
 		List<Estudante> estudantes = Util.listaEstudantes_L(db, null);
-		messageInfo("\nEscolha um estudante:", Util.listaEstudantes_S(db, null, estudantes));
+		messageInfo("\nEscolha um estudante:", Util.listaEstudantes_S(db, msgUsuario, null, estudantes));
 		String entrada;
 		do {
 			entrada = Util.entrada_S();

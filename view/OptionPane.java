@@ -19,10 +19,11 @@ public class OptionPane implements MensagemParaUsuario {
 	}
 
 	@Override
-	public String inputInfo(String mensagem, String titulo, String OK, String CANCEL) {
+	public String inputInfo(String mensagem, String titulo, Boolean exibirTitle, String OK, String CANCEL) {
+		String title = exibirTitle ? titulo : "";
 		UIManager.put("OptionPane.cancelButtonText", CANCEL);
 		UIManager.put("OptionPane.okButtonText", OK);
-		return JOptionPane.showInputDialog(null, mensagem, titulo, JOptionPane.PLAIN_MESSAGE);
+		return JOptionPane.showInputDialog(null, mensagem, title, JOptionPane.PLAIN_MESSAGE);
 	}
 
 	@Override
@@ -37,24 +38,24 @@ public class OptionPane implements MensagemParaUsuario {
 	}
 
 	@Override
-	public void listarEstudantes(BancoDeDados db, String val) {
+	public void listarEstudantes(BancoDeDados db, MensagemParaUsuario msgUsuario, String val) {
 		List<Estudante> estudantes = Util.listaEstudantes_L(db, val);
 		if (estudantes.isEmpty()) {
 			messageInfo("Não há estudantes cadastrados no sistema", "Listagem de todos os estudantes");
 		} else {
-			JList<String> list = new JList<>(Util.listaEstudantes_S(db, val, estudantes).split("\n"));
+			JList<String> list = new JList<>(Util.listaEstudantes_S(db, msgUsuario, val, estudantes).split("\n"));
 			JScrollPane jscrollpane = new JScrollPane(list);
 			messageInfo(jscrollpane, "Listagem de todos os estudantes");
 		}
 	}
 
 	@Override
-	public Integer selecionarEstudante(BancoDeDados db) {
+	public Integer selecionarEstudante(BancoDeDados db, MensagemParaUsuario msgUsuario) {
 		List<Estudante> estudantes = Util.listaEstudantes_L(db, null);
 		if (estudantes.isEmpty()) {
 			messageInfo("Não há estudantes cadastrados no sistema", "Listagem de todos os estudantes");
 		} else {
-			JList<String> list = new JList<>(Util.listaEstudantes_S(db, null, estudantes).split("\n"));
+			JList<String> list = new JList<>(Util.listaEstudantes_S(db, msgUsuario, null, estudantes).split("\n"));
 			JScrollPane jscrollpane = new JScrollPane(list);
 
 			// Configurar o JOptionPane personalizado

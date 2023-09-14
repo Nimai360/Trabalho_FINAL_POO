@@ -1,6 +1,5 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -56,15 +55,31 @@ public abstract class Util {
 		return false;
 	}
 
-	public static String listaEstudantes_S(BancoDeDados db, String arguments, List<Estudante> estudantes) {
+	public static String listaEstudantes_S(BancoDeDados db, MensagemParaUsuario msgUsuario, String arguments,
+			List<Estudante> estudantes) {
 		Integer cont = 1;
 		String listaEstudantes = "";
 
 		for (Estudante e : estudantes) {
-			listaEstudantes += cont + ". " + e.getNome() + " - " + e.getCurso() + "\n";
+			String spaces = formatacaoListaNumeracao(msgUsuario, estudantes, cont);
+			listaEstudantes += spaces + cont + ". " + e.getNome() + " - " + e.getCurso() + "\n";
 			cont++;
 		}
 		return listaEstudantes;
+	}
+
+	private static String formatacaoListaNumeracao(MensagemParaUsuario msgUsuario, List<Estudante> estudantes,
+			Integer cont) {
+		String spaces = "";
+		Integer qtDigitos = (estudantes.size() + "").length() - (cont + "").length();
+		for (int i = 0; i < qtDigitos; i++) {
+			if (msgUsuario instanceof Console) {
+				spaces += " ";
+			} else {
+				spaces += "  ";
+			}
+		}
+		return spaces;
 	}
 
 	public static List<Estudante> listaEstudantes_L(BancoDeDados db, String arguments) {
