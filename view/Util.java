@@ -23,7 +23,7 @@ public abstract class Util {
 		while (!passou) {
 			if (sc.hasNext()) {
 				value = sc.nextLine();
-				if (value != null && !value.isBlank() && !value.isEmpty()) {
+				if (isString(value)) {
 					passou = true;
 				}
 			}
