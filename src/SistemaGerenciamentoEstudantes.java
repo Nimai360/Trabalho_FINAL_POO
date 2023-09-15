@@ -1,4 +1,3 @@
-
 import data.BancoDeDados;
 import view.Console;
 import view.MensagemParaUsuario;
