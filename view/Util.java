@@ -54,6 +54,13 @@ public abstract class Util {
 		}
 		return false;
 	}
+	
+	public static Boolean isNotnum(String texto) {
+		if (!texto.trim().equals("") && texto.matches("^[a-zA-ZÀ-ÖØ-öø-ÿ\\s]+$")) {
+			return true;
+		}
+		return false;
+	}
 
 	public static String listaEstudantes_S(BancoDeDados db, MensagemParaUsuario msgUsuario, String arguments,
 			List<Estudante> estudantes) {

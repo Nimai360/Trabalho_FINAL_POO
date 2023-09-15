@@ -13,7 +13,7 @@ import model.Estudante;
 public final class BancoDeDados extends Conexao {
 
 	private Boolean isDataChanged = false;
-	public final static String DB_NAME = "sgestudantes_db";
+	public final static String DB_NAME = "sgestudantes_db";//_apresentacao";
 
 	public BancoDeDados(String db, String local, Integer porta, String banco, String user, String senha) {
 		super(db, local, porta, banco, user, senha);

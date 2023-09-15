@@ -46,7 +46,7 @@ public class Estudante {
 
 	@Override
 	public String toString() {
-		return "id = " + id + " // nome = " + nome + " // curso = " + curso;
+		return "id = " + id + " // nome: " + nome + " // curso: " + curso;
 	}
 
 	public static ArrayList<Estudante> popularEstudantes(BancoDeDados db, Integer qtEstudantes, Boolean inserirDB) {

@@ -101,6 +101,16 @@ public final class Menu {
 		case 0:
 			String nome = msgUsuario.inputInfo("Informe o nome do estudante", "Cadastro de Estudante", true, "Avançar",
 					"Voltar ao menu");
+
+			if (nome != null) {
+				while (!Util.isNotnum(nome)) {
+					nome = msgUsuario.inputInfo("Informe o nome do estudante válido", "Cadastro de Estudante", false,
+							"Avançar", "Voltar ao menu");
+					if (nome == null) {
+						break;
+					}
+				}
+			}
 			if (Util.isString(nome)) {
 				String curso = msgUsuario.inputInfo("Informe o curso do estudante", "Cadastro de Estudante", false,
 						"Confirmar", "Voltar");
@@ -140,6 +150,16 @@ public final class Menu {
 			case 0:
 				String nome = msgUsuario.inputInfo("Mudar o nome de " + estudantes.get(estudante).getNome() + " para:",
 						"Alterção do nome de cadastro", true, "Confirmar", "Voltar");
+				if (nome != null) {
+					while (!Util.isNotnum(nome)) {
+						nome = msgUsuario.inputInfo(
+								"Informe um nome válido para " + estudantes.get(estudante).getNome(),
+								"Alterção do nome de cadastro", false, "Confirmar", "Voltar");
+						if (nome == null) {
+							break;
+						}
+					}
+				}
 				coluna = Estudante.COLUM_NOME;
 				valor = nome;
 				break;
@@ -204,6 +224,15 @@ public final class Menu {
 		case 1: // Pesquisar por nome
 			String nome = msgUsuario.inputInfo("Informe o nome do estudante desejado:", "Buscar estudante por nome",
 					true, "Confirmar", "Voltar");
+			if (nome != null) {
+				while (!Util.isNotnum(nome)) {
+					nome = msgUsuario.inputInfo("Informe um nome válido para ser pesquisado",
+							"Buscar estudante por nome", false, "Confirmar", "Voltar");
+					if (nome == null) {
+						break;
+					}
+				}
+			}
 			coluna = Estudante.COLUM_NOME;
 			valor = nome;
 			break;

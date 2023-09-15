@@ -20,7 +20,7 @@ public class OptionPane implements MensagemParaUsuario {
 
 	@Override
 	public String inputInfo(String mensagem, String titulo, Boolean exibirTitle, String OK, String CANCEL) {
-		String title = exibirTitle ? titulo : "";
+		String title = titulo; //exibirTitle ? titulo : "";
 		UIManager.put("OptionPane.cancelButtonText", CANCEL);
 		UIManager.put("OptionPane.okButtonText", OK);
 		return JOptionPane.showInputDialog(null, mensagem, title, JOptionPane.PLAIN_MESSAGE);
